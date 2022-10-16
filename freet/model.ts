@@ -14,6 +14,7 @@ export type Freet = {
   dateCreated: Date;
   content: string;
   dateModified: Date;
+  club: Object;
 };
 
 export type PopulatedFreet = {
@@ -22,6 +23,7 @@ export type PopulatedFreet = {
   dateCreated: Date;
   content: string;
   dateModified: Date;
+  club: Object;
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -49,6 +51,11 @@ const FreetSchema = new Schema<Freet>({
   dateModified: {
     type: Date,
     required: true
+  },
+  // The club the freet is associated with (if any). If there is no club (meaning the freet is public), this field is null
+  club: {
+    type: Object,
+    required: false
   }
 });
 

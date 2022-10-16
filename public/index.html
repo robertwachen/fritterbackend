@@ -19,8 +19,8 @@
     <section id="operations-container">
       <h2>Operations:</h2>
       <div class="scrollbox">
-        <form id="create-user">
-          <h3>Create User</h3>
+        <form id="create-anon-account">
+          <h3>Create Anon Account</h3>
           <div>
             <label for="username">Username:</label>
             <input id="username" name="username">
@@ -29,8 +29,65 @@
             <label for="password">Password:</label>
             <input id="password" name="password">
           </div>
-          <input type="submit" value="Create User">
+          <div>
+            <label for="accountType">Account Type:</label>
+            <input id="accountType" name="accountType">
+          </div>
+          <input type="submit" value="Create Anon Account">
         </form>
+        <form id="create-verified-account">
+          <h3>Create Verified Account</h3>
+          <div>
+            <label for="username">Username:</label>
+            <input id="username" name="username">
+          </div>
+          <div>
+            <label for="username">First Name:</label>
+            <input id="username" name="username">
+          </div>
+          <div>
+            <label for="username">Last Name:</label>
+            <input id="username" name="username">
+          </div>
+          <div>
+            <label for="username">Email:</label>
+            <input id="username" name="username">
+          </div>
+          <div>
+            <label for="username">Phone Number:</label>
+            <input id="username" name="username">
+          </div>
+          <div>
+            <label for="username">Birthday:</label>
+            <input id="username" name="username" type="date">
+          </div>
+          <div>
+            <label for="password">Password:</label>
+            <input id="password" name="password">
+          </div>
+          <input type="submit" value="Create Verified Account">
+        </form>
+
+        <!-- Will edit the metadata for all of these later -->
+        <form id="join-club">
+          <h3>Join Club</h3>
+          <div>
+            <label for="username">Club name:</label>
+            <input id="username" name="username">
+          </div>
+          <input type="submit" value="Change Username">
+        </form>
+
+        <form id="create-club">
+          <h3>Create Club</h3>
+          <div>
+            <label for="username">Club name:</label>
+            <input id="username" name="username">
+          </div>
+          <input type="submit" value="Change Username">
+        </form>
+
+        <!-- Will edit the metadata for all of these later -->
 
         <form id="delete-user">
           <h3>Delete User</h3>

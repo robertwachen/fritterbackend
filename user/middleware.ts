@@ -59,6 +59,23 @@ const isValidPassword = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
+
+/**
+ * Checks if there is an account type
+ */
+ const isAccountType = (req: Request, res: Response, next: NextFunction) => {
+  if (!req.body.accountType) {
+    res.status(400).json({
+      error: {
+        password: 'User must have an account type.'
+      }
+    });
+    return;
+  }
+
+  next();
+};
+
 /**
  * Checks if a user with username and password in req.body exists
  */
@@ -161,5 +178,6 @@ export {
   isAccountExists,
   isAuthorExists,
   isValidUsername,
-  isValidPassword
+  isValidPassword,
+  isAccountType
 };

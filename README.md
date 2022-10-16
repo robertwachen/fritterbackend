@@ -255,7 +255,7 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if the user is already logged in
-- `400` if username or password is not in correct format format or missing in the req
+- `400` if username or password is not in correct format or missing in the req
 - `401` if the user login credentials are invalid
 
 #### `DELETE /api/users/session` - Sign out user
@@ -274,6 +274,15 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `username` _{string}_ - The user's username
 - `password` _{string}_ - The user's password
+- `email` _{string}_ - The user's email
+- `emailConfirmed` _{boolean}_ - Whether the user's email is confirmed
+- `phone` _{string}_ - The user's phone
+- `phoneConfirmed` _{boolean}_ - Whether the user's phone is confirmed
+- `firstName` _{string}_ - The user's first name
+- `lastName` _{string}_ - The user's last name
+- `birthday` _{Date}_ - The user's birthday
+- `verifiedClubs` _{array}_ - The clubs that have verified the user as a member
+- `pendingClubs` _{array}_ - The clubs that have not yet verified the user as a member
 
 **Returns**
 
@@ -284,6 +293,7 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if there is a user already logged in
 - `400` if username or password is in the wrong format
+- `402` if a verified account user data (i.e., email, phone, first/last name, birthday) is not in the correct format or missing in the req
 - `409` if username is already in use
 
 #### `PUT /api/users` - Update a user's profile
@@ -292,6 +302,15 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `username` _{string}_ - The user's username
 - `password` _{string}_ - The user's password
+- `email` _{string}_ - The user's email
+- `emailConfirmed` _{boolean}_ - Whether the user's email is confirmed
+- `phone` _{string}_ - The user's phone
+- `phoneConfirmed` _{boolean}_ - Whether the user's phone is confirmed
+- `firstName` _{string}_ - The user's first name
+- `lastName` _{string}_ - The user's last name
+- `birthday` _{Date}_ - The user's birthday
+- `verifiedClubs` _{array}_ - The clubs that have verified the user as a member
+- `pendingClubs` _{array}_ - The clubs that have not yet verified the user as a member
 
 **Returns**
 
@@ -302,6 +321,7 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if the user is not logged in
 - `400` if username or password is in the wrong format
+- `402` if a verified account user data (i.e., email, phone, first/last name, birthday) is not in the correct format or missing in the req
 - `409` if the username is already in use
 
 #### `DELETE /api/users` - Delete user
@@ -313,3 +333,102 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if the user is not logged in
+
+
+#### `POST /api/clubs` - Create a new club
+
+**Body**
+
+- `name` _{string}_ - The club's name
+- `privacy` _{enum}_ - The club's privacy settings: secret, private, or public
+- `members` _{array}_ - All club members that have been approved
+- `membershipRules` _{string}_ - Any information about the club or its rules
+- `pendingMembers` _{array}_ - All club members that have not been approved (for secret/private clubs)
+
+
+**Returns**
+
+- A success message
+- An object with the club's privacy, members list, pending members list, and membershipRules
+
+**Throws**
+
+- `400` if there are no members (must be at least one member)
+- `409` if the club name is already in use
+
+#### `PUT /api/users` - Update a club's privacy, rules, or members list
+
+**Body** _(no need to add fields that are not being changed)_
+
+- `privacy` _{enum}_ - The club's privacy settings: secret, private, or public
+- `members` _{array}_ - All club members that have been approved
+- `membershipRules` _{string}_ - Any information about the club or its rules
+- `pendingMembers` _{array}_ - All club members that have not been approved (for secret/private clubs)
+
+
+**Returns**
+
+- A success message
+- An object with the club's new privacy, rules, or members list (name cannot change)
+
+**Throws**
+
+- `400` if there are no members (must be at least one member)
+
+
+#### `DELETE /api/clubs` - Delete club
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if the club does not exist
+
+
+
+#### `POST /api/discourses` - Create a new discourse
+
+**Body**
+
+- `startDate` _{Date}_ - The start date of the Discourse
+- `endDate` _{Date}_ - The end date of the Discourse
+- `clubs` _{array}_ - All clubs allowed in the Discourse
+
+**Returns**
+
+- A success message
+- An object with the startDate, endDate, and clubs
+
+**Throws**
+
+- `400` if there are less than two clubs
+- `409` if the discourse already exists
+
+#### `PUT /api/users` - Update a club's privacy, rules, or members list
+
+**Body** _(no need to add fields that are not being changed)_
+
+- `endDate` _{Date}_ - The end date of the Discourse
+- `clubs` _{array}_ - All clubs allowed in the Discourse
+
+**Returns**
+
+- A success message
+- An object with the club's startDate, endDate, and clubs
+
+**Throws**
+
+- `400` if there are less than two clubs
+
+
+#### `DELETE /api/clubs` - Delete club
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if the club does not exist
