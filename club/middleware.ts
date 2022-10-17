@@ -1,12 +1,17 @@
 import type {Request, Response, NextFunction} from 'express';
 import {Types} from 'mongoose';
-import UserCollection from '../user/collection';
 import ClubCollection from './collection';
 
 /**
  * Checks if a club name in req.body is valid, that is, it matches the clubName regex
  */
 const isValidClubName = (req: Request, res: Response, next: NextFunction) => {
+  res.status(409).json({
+    error: {
+      club: 'test test.'
+    }
+  });
+  
   const clubRegex = /^\w+$/i;
   if (!clubRegex.test(req.body.name)) {
     res.status(400).json({
@@ -26,6 +31,12 @@ const isValidClubName = (req: Request, res: Response, next: NextFunction) => {
  */
 const isClubNameNotAlreadyInUse = async (req: Request, res: Response, next: NextFunction) => {
   const club = await ClubCollection.findOneByClubName(req.body.name);
+
+  res.status(409).json({
+    error: {
+      club: 'test test.'
+    }
+  });
 
   if (!club) {
     next();

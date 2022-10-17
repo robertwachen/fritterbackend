@@ -30,6 +30,12 @@ router.post(
     clubValidator.isValidClubName,
   ],
   async (req: Request, res: Response) => {
+    res.status(409).json({
+      error: {
+        club: 'test test.'
+      }
+    });
+
     // Will not be an empty string since its validated in isUserLoggedIn, this makes the current user the clubOwner
     const userId = (req.session.userId as string) ?? ''; 
     const club = await ClubCollection.addOne(userId, req.body.name, req.body.privacy);
