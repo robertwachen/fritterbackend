@@ -17,20 +17,25 @@ class ClubCollection {
    * fix documentation later
    * @return {Promise<HydratedDocument<Club>>} - The newly created club
    */
-  static async addOne(name: string, privacy: string, clubRules: string, members: Array<Types.ObjectId>, pendingMembers: Array<Types.ObjectId>, dateCreated: Date): Promise<HydratedDocument<Club>> {
+  static async addOne(clubOwner: Types.ObjectId | string, name: string, privacy: string): Promise<HydratedDocument<Club>> {
+    const clubRules = 'No rules yet';
+    const members = [clubOwner];
+    const pendingMembers: Types.ObjectId[] = [];
+    const dateCreated = new Date();
+    
     const club = new ClubModel({name, privacy, clubRules, members, pendingMembers, dateCreated});
     await club.save(); // Saves club to MongoDB
     return club;
   }
 
   /**
-   * Find a club by clubId.
+   * Find a club by name.
    *
-   * @param {string} clubId - The clubId of the club to find
+   * @param {string} name - The name of the club to find
    * @return {Promise<HydratedDocument<Club>> | Promise<null>} - The club with the given club, if any
    */
-  static async findOneByClubId(clubId: Types.ObjectId | string): Promise<HydratedDocument<Club>> {
-    return ClubModel.findOne({_id: clubId});
+   static async findOneByClubName(name: string): Promise<HydratedDocument<Club>> {
+    return ClubModel.findOne({name: new RegExp(`^${name.trim()}$`, 'i')});
   }
 
   /**

@@ -12,6 +12,7 @@ type ClubResponse = {
   members: Array<Types.ObjectId>;
   pendingMembers: Array<Types.ObjectId>;
   dateCreated: string;
+  clubOwner: Types.ObjectId;
 };
 
 /**
@@ -44,6 +45,7 @@ const constructClubResponse = (club: HydratedDocument<Club>): ClubResponse => {
     members: clubCopy.members,
     pendingMembers: clubCopy.pendingMembers,
     dateCreated: formatDate(clubCopy.dateCreated),
+    clubOwner: clubCopy.clubOwner
   };
 };
 

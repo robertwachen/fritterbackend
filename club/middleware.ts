@@ -1,6 +1,7 @@
 import type {Request, Response, NextFunction} from 'express';
 import {Types} from 'mongoose';
 import UserCollection from '../user/collection';
+import ClubCollection from './collection';
 
 /**
  * Checks if a club name in req.body is valid, that is, it matches the clubName regex
@@ -24,11 +25,16 @@ const isValidClubName = (req: Request, res: Response, next: NextFunction) => {
  * Checks if a club name in req.body is already in use
  */
 const isClubNameNotAlreadyInUse = async (req: Request, res: Response, next: NextFunction) => {
-  const club = await UserCollection.findOneByUsername(req.body.name);
+  const club = await ClubCollection.findOneByClubName(req.body.name);
+
+  if (!club) {
+    next();
+    return;
+  }
 
   res.status(409).json({
     error: {
-      username: 'A club with this name already exists.'
+      club: 'A club with this name already exists.'
     }
   });
 };

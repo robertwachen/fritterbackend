@@ -16,6 +16,7 @@ export type Club = {
   members: Array<Types.ObjectId>;
   pendingMembers: Array<Types.ObjectId>;
   dateCreated: Date;
+  clubOwner: Types.ObjectId;
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -46,6 +47,11 @@ const ClubSchema = new Schema<Club>({
   dateCreated: {
     type: Date,
     required: true,
+  },
+  clubOwner: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
   },
 });
 
