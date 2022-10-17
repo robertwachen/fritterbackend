@@ -28,7 +28,8 @@ router.post(
     userValidator.isValidUsername,
     userValidator.isValidPassword,
     userValidator.isAccountExists,
-    userValidator.isAccountType
+    userValidator.isAccountType,
+    userValidator.hasVerifiedUserProps
   ],
   async (req: Request, res: Response) => {
     const user = await UserCollection.findOneByUsernameAndPassword(
@@ -84,10 +85,11 @@ router.post(
     userValidator.isValidUsername,
     userValidator.isUsernameNotAlreadyInUse,
     userValidator.isValidPassword,
-    userValidator.isAccountType
+    userValidator.isAccountType,
+    userValidator.hasVerifiedUserProps
   ],
   async (req: Request, res: Response) => {
-    const user = await UserCollection.addOne(req.body.username, req.body.password, req.body.accountType);
+    const user = await UserCollection.addOne(req.body.username, req.body.password, req.body.accountType, req.body.firstName, req.body.lastName, req.body.email, req.body.phone, req.body.birthday);
     req.session.userId = user._id.toString();
     res.status(201).json({
       message: `Your account was created successfully. You have been logged in as ${user.username}`,
@@ -115,7 +117,8 @@ router.put(
     userValidator.isValidUsername,
     userValidator.isUsernameNotAlreadyInUse,
     userValidator.isValidPassword,
-    userValidator.isAccountType
+    userValidator.isAccountType,
+    userValidator.hasVerifiedUserProps
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn

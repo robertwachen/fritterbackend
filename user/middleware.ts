@@ -64,14 +64,80 @@ const isValidPassword = (req: Request, res: Response, next: NextFunction) => {
  * Checks if there is an account type
  */
  const isAccountType = (req: Request, res: Response, next: NextFunction) => {
-  if (!req.body.accountType) {
+  // if (!req.body.accountType) {
+  //   res.status(400).json({
+  //     error: {
+  //       accountType: 'User must have an account type.'
+  //     }
+  //   });
+  //   return;
+  // }
+
+  if (!req.body.accountType || (req.body.accountType != "anonymous" && req.body.accountType != "verified")) {
     res.status(400).json({
       error: {
-        password: 'User must have an account type.'
+        accountType: 'User must have an account type of either "anonymous" or "verified."'
       }
     });
     return;
   }
+
+  next();
+};
+
+/**
+ * Checks if a verified user has firstName, lastName, email, phone, and birthday
+ */
+ const hasVerifiedUserProps = (req: Request, res: Response, next: NextFunction) => {
+  if (req.body.accountType === 'verified')
+  {
+    if (!req.body.firstName) {
+      res.status(400).json({
+        error: {
+          birthday: 'Verified users must have a first name.'
+        }
+      });
+      return;
+    }
+
+    if (!req.body.lastName) {
+      res.status(400).json({
+        error: {
+          birthday: 'Verified users must have a first name.'
+        }
+      });
+      return;
+    }
+
+    if (!req.body.email) {
+      res.status(400).json({
+        error: {
+          email: 'Verified users must have an email.'
+        }
+      });
+      return;
+    }
+
+    if (!req.body.phone) {
+      res.status(400).json({
+        error: {
+          phone: 'Verified users must have a phone number.'
+        }
+      });
+      return;
+    }
+
+    if (!req.body.birthday) {
+      res.status(400).json({
+        error: {
+          birthday: 'Verified users must have a birthday.'
+        }
+      });
+      return;
+    }
+
+  }
+  
 
   next();
 };
@@ -179,5 +245,6 @@ export {
   isAuthorExists,
   isValidUsername,
   isValidPassword,
-  isAccountType
+  isAccountType,
+  hasVerifiedUserProps
 };

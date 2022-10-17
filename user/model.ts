@@ -26,7 +26,6 @@ export type User = {
 
   emailConfirmed: boolean;
   phoneConfirmed: boolean;
-  birthdayConfirmed: boolean;
 
   verifiedClubs: Array<Object>;
   pendingClubs: Array<Object>;
@@ -85,10 +84,6 @@ const UserSchema = new Schema({
     type: Boolean,
     required: false
   },
-  birthdayConfirmed: {
-    type: Boolean,
-    required: false
-  },
   verifiedClubs: {
     type: Array,
     required: false
@@ -100,4 +95,5 @@ const UserSchema = new Schema({
 });
 
 const UserModel = model<User>('User', UserSchema);
+
 export default UserModel;
