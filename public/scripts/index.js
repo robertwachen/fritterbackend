@@ -35,6 +35,11 @@ const formsAndHandlers = {
   'change-password': changePassword,
   'sign-in': signIn,
   'sign-out': signOut,
+
+  'create-club': createClub,
+  'modify-club': modifyClub,
+  'delete-club': deleteClub,
+
   'view-all-freets': viewAllFreets,
   'view-freets-by-author': viewFreetsByAuthor,
   'create-freet': createFreet,

@@ -342,14 +342,14 @@ This renders the `index.html` file that will be used to interact with the backen
 - `name` _{string}_ - The club's name
 - `privacy` _{enum}_ - The club's privacy settings: secret, private, or public
 - `members` _{array}_ - All club members that have been approved
-- `membershipRules` _{string}_ - Any information about the club or its rules
+- `clubRules` _{string}_ - Any information about the club or its rules
 - `pendingMembers` _{array}_ - All club members that have not been approved (for secret/private clubs)
 
 
 **Returns**
 
 - A success message
-- An object with the club's privacy, members list, pending members list, and membershipRules
+- An object with the club's privacy, members list, pending members list, and clubRules
 
 **Throws**
 
@@ -362,7 +362,7 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `privacy` _{enum}_ - The club's privacy settings: secret, private, or public
 - `members` _{array}_ - All club members that have been approved
-- `membershipRules` _{string}_ - Any information about the club or its rules
+- `clubRules` _{string}_ - Any information about the club or its rules
 - `pendingMembers` _{array}_ - All club members that have not been approved (for secret/private clubs)
 
 
