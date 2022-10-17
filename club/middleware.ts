@@ -6,11 +6,6 @@ import ClubCollection from './collection';
  * Checks if a club name in req.body is valid, that is, it matches the clubName regex
  */
 const isValidClubName = (req: Request, res: Response, next: NextFunction) => {
-  res.status(409).json({
-    error: {
-      club: 'test test.'
-    }
-  });
   
   const clubRegex = /^\w+$/i;
   if (!clubRegex.test(req.body.name)) {
@@ -23,6 +18,7 @@ const isValidClubName = (req: Request, res: Response, next: NextFunction) => {
   }
 
   next();
+  return;
 }
 
 
@@ -31,12 +27,6 @@ const isValidClubName = (req: Request, res: Response, next: NextFunction) => {
  */
 const isClubNameNotAlreadyInUse = async (req: Request, res: Response, next: NextFunction) => {
   const club = await ClubCollection.findOneByClubName(req.body.name);
-
-  res.status(409).json({
-    error: {
-      club: 'test test.'
-    }
-  });
 
   if (!club) {
     next();
@@ -53,62 +43,24 @@ const isClubNameNotAlreadyInUse = async (req: Request, res: Response, next: Next
 /**
  * Checks if a club has privacy, do later
  */
-//  const hasClubProps = (req: Request, res: Response, next: NextFunction) => {
-//   if (req.body.accountType === 'verified')
-//   {
-//     if (!req.body.firstName) {
-//       res.status(400).json({
-//         error: {
-//           birthday: 'Verified users must have a first name.'
-//         }
-//       });
-//       return;
-//     }
-
-//     if (!req.body.lastName) {
-//       res.status(400).json({
-//         error: {
-//           birthday: 'Verified users must have a first name.'
-//         }
-//       });
-//       return;
-//     }
-
-//     if (!req.body.email) {
-//       res.status(400).json({
-//         error: {
-//           email: 'Verified users must have an email.'
-//         }
-//       });
-//       return;
-//     }
-
-//     if (!req.body.phone) {
-//       res.status(400).json({
-//         error: {
-//           phone: 'Verified users must have a phone number.'
-//         }
-//       });
-//       return;
-//     }
-
-//     if (!req.body.birthday) {
-//       res.status(400).json({
-//         error: {
-//           birthday: 'Verified users must have a birthday.'
-//         }
-//       });
-//       return;
-//     }
-
-//   }
+ const hasClubProps = (req: Request, res: Response, next: NextFunction) => {
+  if (req.body.privacy != 'secret' && req.body.privacy != 'private' && req.body.privacy != 'public')
+  {
+    res.status(400).json({
+      error: {
+        privacy: 'Club privacy must be either secret, private, or public.'
+      }
+    });
+    return;
+  }
   
-
-//   next();
-// };
+  next();
+  return;
+};
 
 
 export {
   isValidClubName,
   isClubNameNotAlreadyInUse,
+  hasClubProps,
 };

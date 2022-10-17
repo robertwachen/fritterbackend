@@ -23,7 +23,7 @@ class ClubCollection {
     const pendingMembers: Types.ObjectId[] = [];
     const dateCreated = new Date();
     
-    const club = new ClubModel({name, privacy, clubRules, members, pendingMembers, dateCreated});
+    const club = new ClubModel({name, privacy, clubRules, members, pendingMembers, dateCreated, clubOwner});
     await club.save(); // Saves club to MongoDB
     return club;
   }

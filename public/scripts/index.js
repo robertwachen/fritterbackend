@@ -26,6 +26,12 @@ function showResponse(response) {
  * Native browser Fetch API documentation to fetch resources: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
  */
 
+function createClub(fields) {
+  fetch('/api/clubs', {method: 'POST', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}})
+    .then(showResponse)
+    .catch(showResponse);
+}
+
 // Map form (by id) to the function that should be called on submit
 const formsAndHandlers = {
   'create-anon-account': createAnonAccount,
@@ -37,8 +43,8 @@ const formsAndHandlers = {
   'sign-out': signOut,
 
   'create-club': createClub,
-  'modify-club': modifyClub,
-  'delete-club': deleteClub,
+  // 'modify-club': modifyClub,
+  // 'delete-club': deleteClub,
 
   'view-all-freets': viewAllFreets,
   'view-freets-by-author': viewFreetsByAuthor,
