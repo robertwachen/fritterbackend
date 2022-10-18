@@ -21,9 +21,28 @@ const isValidClubName = (req: Request, res: Response, next: NextFunction) => {
   return;
 }
 
+/**
+ * Checks if a club name in req.body already exists (for deleting/modifying)
+ */
+ const isExistingClubName = async (req: Request, res: Response, next: NextFunction) => {
+  
+  const club = await ClubCollection.findOneByClubName(req.body.name);
+
+  if (!club) {
+    res.status(409).json({
+      error: {
+        club: 'This club does not exist.'
+      }
+    });
+  }
+
+  next();
+  return;
+}
+
 
 /**
- * Checks if a club name in req.body is already in use
+ * Checks if a club name in req.body is already in use (for creating)
  */
 const isClubNameNotAlreadyInUse = async (req: Request, res: Response, next: NextFunction) => {
   const club = await ClubCollection.findOneByClubName(req.body.name);
@@ -58,9 +77,27 @@ const isClubNameNotAlreadyInUse = async (req: Request, res: Response, next: Next
   return;
 };
 
+const isClubOwner = async (req: Request, res: Response, next: NextFunction) => {
+  const club = await ClubCollection.findOneByClubName(req.body.name);
+  if (club) {
+    if (club.clubOwner == req.session.userId) {
+      next();
+      return;
+    }
+  }
+
+  res.status(403).json({
+    error: {
+      club: 'You are not the owner of this club.'
+    }
+  });
+};
+
 
 export {
   isValidClubName,
   isClubNameNotAlreadyInUse,
   hasClubProps,
+  isExistingClubName,
+  isClubOwner
 };

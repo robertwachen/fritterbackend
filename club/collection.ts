@@ -79,10 +79,11 @@ class ClubCollection {
   /**
    * Delete a club from the collection.
    *
-   * @param {string} clubId - The clubId of club to delete
+   * @param {string} name - The name of club to delete
    * @return {Promise<Boolean>} - true if the club has been deleted, false otherwise
    */
-  static async deleteOne(clubId: Types.ObjectId | string): Promise<boolean> {
+  static async deleteOne(name: string): Promise<boolean> {
+    const clubId = await ClubCollection.findOneByClubName(name);
     const club = await ClubModel.deleteOne({_id: clubId});
     return club !== null;
   }

@@ -55,15 +55,14 @@ router.post(
  * ^^ UPDATE
  */
 router.delete(
-  '/:clubId?',
+  '/:name?',
   [
     userValidator.isUserLoggedIn,
-    clubValidator.isValidClubName,
-    clubValidator.isClubNameNotAlreadyInUse,
-    clubValidator.hasClubProps,
+    // clubValidator.isExistingClubName,
+    // clubValidator.isClubOwner,
   ],
   async (req: Request, res: Response) => {
-    await ClubCollection.deleteOne(req.params.clubId);
+    // await ClubCollection.deleteOne(req.params.name);
     res.status(200).json({
       message: 'Your club was deleted successfully.'
     });

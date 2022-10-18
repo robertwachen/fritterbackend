@@ -5,10 +5,12 @@
   <meta name="author" content="6.170 Staff">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/stylesheets/style.css">
-  <script src="/scripts/freet.js"></script>
-  <script src="/scripts/user.js"></script>
-  <script src="/scripts/index.js"></script>
-  <script src="/scripts/club.js"></script>
+  <script src="scripts/freet.js"></script>
+  <script src="scripts/user.js"></script>
+  <script src="scripts/club.js"></script>
+
+  <!-- the index script should be last -->
+  <script src="scripts/index.js"></script>
 </head>
 
 <body>
@@ -73,8 +75,6 @@
           <input type="submit" value="Create Verified Account">
         </form>
 
-        <!-- Will edit the metadata for all of these later -->
-
         <form id="create-club">
           <h3>Create Club</h3>
           <div>
@@ -88,7 +88,8 @@
           <input type="submit" value="Create Club">
         </form>
 
-        
+        <!-- Will edit the metadata for all of these later -->
+
         <form id="join-club">
           <h3>Join Club</h3>
           <div>
@@ -96,6 +97,15 @@
             <input id="name" name="name">
           </div>
           <input type="submit" value="Join Club">
+        </form>
+
+        <form id="delete-club">
+          <h3>Delete Club</h3>
+          <div>
+            <label for="name">Club name:</label>
+            <input id="name" name="name">
+          </div>
+          <input type="submit" value="Delete Club">
         </form>
 
         <!-- ^^ Will edit the metadata for all of these later ^^ -->

@@ -15,7 +15,7 @@ function modifyClub(fields) {
 }
 
 function deleteClub(fields) {
-  fetch('/api/clubs', {method: 'DELETE'})
+  fetch(`/api/clubs/${fields.name}`, {method: 'DELETE'})
     .then(showResponse)
     .catch(showResponse);
 }
