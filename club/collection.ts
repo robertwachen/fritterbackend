@@ -84,6 +84,7 @@ class ClubCollection {
    */
   static async deleteOne(name: string): Promise<boolean> {
     const clubId = await ClubCollection.findOneByClubName(name);
+    console.log('clubId: ', clubId);
     const club = await ClubModel.deleteOne({_id: clubId});
     return club !== null;
   }

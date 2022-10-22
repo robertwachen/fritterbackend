@@ -49,6 +49,7 @@ const formsAndHandlers = {
 // Attach handlers to forms
 function init() {
   Object.entries(formsAndHandlers).forEach(([formID, handler]) => {
+    console.log(formID)
     const form = document.getElementById(formID);
     form.onsubmit = e => {
       e.preventDefault();

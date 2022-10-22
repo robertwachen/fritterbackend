@@ -58,13 +58,14 @@ router.delete(
   '/:name?',
   [
     userValidator.isUserLoggedIn,
-    // clubValidator.isExistingClubName,
-    // clubValidator.isClubOwner,
+    clubValidator.isValidClubName,
+    clubValidator.isExistingClubName,
+    clubValidator.isClubOwner,
   ],
   async (req: Request, res: Response) => {
-    // await ClubCollection.deleteOne(req.params.name);
+    await ClubCollection.deleteOne(req.params.name);
     res.status(200).json({
-      message: 'Your club was deleted successfully.'
+      message: 'Your club was deleted successfully: ' + req.params.name + '.'
     });
   }
 );

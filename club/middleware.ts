@@ -25,8 +25,8 @@ const isValidClubName = (req: Request, res: Response, next: NextFunction) => {
  * Checks if a club name in req.body already exists (for deleting/modifying)
  */
  const isExistingClubName = async (req: Request, res: Response, next: NextFunction) => {
-  
-  const club = await ClubCollection.findOneByClubName(req.body.name);
+
+  const club = await ClubCollection.findOneByClubName(req.params.name);
 
   if (!club) {
     res.status(409).json({
@@ -34,6 +34,7 @@ const isValidClubName = (req: Request, res: Response, next: NextFunction) => {
         club: 'This club does not exist.'
       }
     });
+    return;
   }
 
   next();
@@ -78,12 +79,11 @@ const isClubNameNotAlreadyInUse = async (req: Request, res: Response, next: Next
 };
 
 const isClubOwner = async (req: Request, res: Response, next: NextFunction) => {
-  const club = await ClubCollection.findOneByClubName(req.body.name);
-  if (club) {
-    if (club.clubOwner == req.session.userId) {
-      next();
-      return;
-    }
+  const club = await ClubCollection.findOneByClubName(req.params.name);
+
+  if (club.clubOwner._id == req.session.userId) {
+    next();
+    return;
   }
 
   res.status(403).json({
