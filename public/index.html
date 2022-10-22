@@ -100,10 +100,18 @@
         </form>
 
         <form id="modify-club">
-          <h3>Modify Club</h3>
+          <h3>Modify Club Information</h3>
           <div>
             <label for="name">Club name:</label>
             <input id="name" name="name">
+          </div>
+          <div>
+            <label for="privacy">Privacy:</label>
+            <input id="privacy" name="privacy">
+          </div>
+          <div>
+            <label for="rules">Rules:</label>
+            <input id="rules" name="rules">
           </div>
           <input type="submit" value="Modify Club">
         </form>
@@ -174,8 +182,21 @@
           <input type="submit" value="View Freets By Author">
         </form>
 
+        <form id="view-freets-by-club">
+          <h3>View Freets By Club</h3>
+          <div>
+            <label for="clubName">Club Name:</label>
+            <input id="clubName" name="clubName">
+          </div>
+          <input type="submit" value="View Freets By Club">
+        </form>
+
         <form id="create-freet">
           <h3>Create Freet</h3>
+          <div>
+            <label for="clubName">Club:</label>
+            <input id="clubName" name="clubName"></input>
+          </div>
           <div>
             <label for="content">Content:</label>
             <textarea id="content" name="content"></textarea>

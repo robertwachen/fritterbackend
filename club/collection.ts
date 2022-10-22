@@ -45,18 +45,18 @@ class ClubCollection {
    * @param {Object} clubDetails - An object with the club's updated credentials
    * @return {Promise<HydratedDocument<Club>>} - The updated club
    */
-  static async updateOne(clubId: Types.ObjectId | string, clubDetails: any): Promise<HydratedDocument<Club>> {
-    const club = await ClubModel.findOne({_id: clubId});
-    if (clubDetails.name) {
-      club.name = clubDetails.name as string;
-    }
+  static async updateOne(name: string, clubDetails: any): Promise<HydratedDocument<Club>> {
 
+    // Note: you can't update a club's name
+    const club = await ClubCollection.findOneByClubName(name);
+
+    // At this point we have checked that the club privacy is valid
     if (clubDetails.privacy) {
       club.privacy = clubDetails.privacy as string;
     }
 
-    if (clubDetails.clubRules) {
-      club.clubRules = clubDetails.clubRules as string;
+    if (clubDetails.rules) {
+      club.clubRules = clubDetails.rules as string;
     }
 
     if (clubDetails.members) {

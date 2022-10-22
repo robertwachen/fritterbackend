@@ -3,6 +3,7 @@ import express from 'express';
 import FreetCollection from './collection';
 import * as userValidator from '../user/middleware';
 import * as freetValidator from '../freet/middleware';
+import * as clubValidator from '../club/middleware';
 import * as util from './util';
 
 const router = express.Router();
@@ -28,14 +29,32 @@ const router = express.Router();
 router.get(
   '/',
   async (req: Request, res: Response, next: NextFunction) => {
+
+    // Check if clubName query parameter was supplied
+    if (req.query.clubName !== undefined) {
+      next();
+      return;
+    }
+
     // Check if authorId query parameter was supplied
     if (req.query.author !== undefined) {
+      next();
       next();
       return;
     }
 
     const allFreets = await FreetCollection.findAll();
     const response = allFreets.map(util.constructFreetResponse);
+    res.status(200).json(response);
+  },
+  [
+    userValidator.isUserLoggedIn,
+    clubValidator.isExistingClubName,
+    userValidator.isUserInClub
+  ],
+  async (req: Request, res: Response, next: NextFunction) => {
+    const clubFreets = await FreetCollection.findAllByClubName(req.query.clubName as string);
+    const response = clubFreets.map(util.constructFreetResponse);
     res.status(200).json(response);
   },
   [
@@ -63,11 +82,12 @@ router.post(
   '/',
   [
     userValidator.isUserLoggedIn,
-    freetValidator.isValidFreetContent
+    userValidator.isUserInClub,
+    freetValidator.isValidFreetContent,
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-    const freet = await FreetCollection.addOne(userId, req.body.content);
+    const freet = await FreetCollection.addOne(userId, req.body.content, req.body.clubName);
 
     res.status(201).json({
       message: 'Your freet was created successfully.',

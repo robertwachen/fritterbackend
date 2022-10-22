@@ -6,9 +6,21 @@ import ClubCollection from './collection';
  * Checks if a club name in req.body is valid, that is, it matches the clubName regex
  */
 const isValidClubName = (req: Request, res: Response, next: NextFunction) => {
+
+  // Accounts for deleting a club, which stores the name in req.params instead of req.body
+  const clubName = req.body.name || req.params.name;
+  const clubName2 = req.params.name;
+
+
+  console.log(req.body, req.params);
+
+  console.log('**********')
+
+  console.log(clubName);
+  console.log(clubName2);
   
   const clubRegex = /^\w+$/i;
-  if (!clubRegex.test(req.body.name)) {
+  if (!clubRegex.test(clubName)) {
     res.status(400).json({
       error: {
         name: 'Club name must be a nonempty alphanumeric string.'
@@ -25,8 +37,9 @@ const isValidClubName = (req: Request, res: Response, next: NextFunction) => {
  * Checks if a club name in req.body already exists (for deleting/modifying)
  */
  const isExistingClubName = async (req: Request, res: Response, next: NextFunction) => {
+  const clubName = req.body.name || req.params.name || req.query.clubName;
 
-  const club = await ClubCollection.findOneByClubName(req.params.name);
+  const club = await ClubCollection.findOneByClubName(clubName);
 
   if (!club) {
     res.status(409).json({
@@ -40,7 +53,6 @@ const isValidClubName = (req: Request, res: Response, next: NextFunction) => {
   next();
   return;
 }
-
 
 /**
  * Checks if a club name in req.body is already in use (for creating)
@@ -73,13 +85,26 @@ const isClubNameNotAlreadyInUse = async (req: Request, res: Response, next: Next
     });
     return;
   }
+
+  if (req.body.rules === '')
+  {
+    res.status(400).json({
+      error: {
+        privacy: 'Club must have rules.'
+      }
+    });
+    return;
+  }
   
   next();
   return;
 };
 
 const isClubOwner = async (req: Request, res: Response, next: NextFunction) => {
-  const club = await ClubCollection.findOneByClubName(req.params.name);
+
+  const clubName = req.body.name || req.params.name;
+
+  const club = await ClubCollection.findOneByClubName(clubName);
 
   if (club.clubOwner._id == req.session.userId) {
     next();
@@ -99,5 +124,5 @@ export {
   isClubNameNotAlreadyInUse,
   hasClubProps,
   isExistingClubName,
-  isClubOwner
+  isClubOwner,
 };

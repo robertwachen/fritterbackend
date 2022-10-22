@@ -236,6 +236,35 @@ const isAuthorExists = async (req: Request, res: Response, next: NextFunction) =
   next();
 };
 
+/**
+ * Checks if a user is in a club
+ * @param clubId - the club id to check
+ * @param userId - the user id to check
+ * @returns true if the user is in the club
+ * 
+ */
+const isUserInClub = async (req: Request, res: Response, next: NextFunction) => {
+  const user = await UserCollection.findOneByUserId(req.session.userId);
+
+  // REMOVE THIS WHEN DONE FILTERING BY CLUB NAME 'Test'
+  user.verifiedClubs = [...user.verifiedClubs, 'Test']
+
+  const clubName = req.body.clubName || req.query.clubName;
+
+  if (user.verifiedClubs.includes(clubName)) 
+  {
+    next();
+    return;
+  }
+  else
+  {
+    res.status(404).json({
+      error: `You are not a member of this club.`
+    });
+    return;
+  }
+};
+
 export {
   isCurrentSessionUserExists,
   isUserLoggedIn,
@@ -246,5 +275,6 @@ export {
   isValidUsername,
   isValidPassword,
   isAccountType,
-  hasVerifiedUserProps
+  hasVerifiedUserProps,
+  isUserInClub
 };

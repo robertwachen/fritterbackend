@@ -1,17 +1,18 @@
 import type {NextFunction, Request, Response} from 'express';
 import express from 'express';
-import ClubCollection from './collection';
-import * as userValidator from '../user/middleware';
-import * as clubValidator from '../club/middleware';
+import DiscourseCollection from './collection';
+import * as discourseValidator from './middleware';
 import * as util from './util';
 
 const router = express.Router();
 
 
 /**
- * Create a new club.
+ * Create a new discourse.
+ * 
+ * Note: users will not create clubs, we will create them for them. Thus, we do not check for anything about the user.
  *
- * @name POST /api/freets
+ * @name POST /api/discourses
  *
  * @param {string} content - The content of the freet
  * @return {FreetResponse} - The created freet
@@ -25,25 +26,20 @@ const router = express.Router();
 router.post(
   '/',
   [
-    userValidator.isUserLoggedIn,
-    clubValidator.isValidClubName,
-    clubValidator.isClubNameNotAlreadyInUse,
-    clubValidator.hasClubProps,
+    discourseValidator.isValidClubs,
   ],
   async (req: Request, res: Response) => {
-    // Will not be an empty string since its validated in isUserLoggedIn, this makes the current user the clubOwner
-    const userId = (req.session.userId as string) ?? ''; 
-    const club = await ClubCollection.addOne(userId, req.body.name, req.body.privacy);
+    const discourse = await DiscourseCollection.addOne(req.body.clubs, req.body.endDate);
 
     res.status(201).json({
-      message: 'Your club was created successfully.',
-      club: util.constructClubResponse(club)
+      message: 'Your discourse was created successfully.',
+      discourse: util.constructDiscourseResponse(discourse)
     });
   }
 );
 
 /**
- * Delete a club
+ * Delete a discourse
  *
  * @name DELETE /api/clubs/:id
  *
@@ -55,23 +51,23 @@ router.post(
  * ^^ UPDATE
  */
 router.delete(
-  '/:name?',
+  '/:id?',
   [
-    userValidator.isUserLoggedIn,
-    clubValidator.isValidClubName,
-    clubValidator.isExistingClubName,
-    clubValidator.isClubOwner,
+    // userValidator.isUserLoggedIn,
+    // clubValidator.isValidClubName,
+    // clubValidator.isExistingClubName,
+    // clubValidator.isClubOwner,
   ],
   async (req: Request, res: Response) => {
-    await ClubCollection.deleteOne(req.params.name);
+    await DiscourseCollection.deleteOne(req.params.name);
     res.status(200).json({
-      message: 'Your club was deleted successfully: ' + req.params.name + '.'
+      message: 'Your discourse was deleted successfully: ' + req.params.name + '.'
     });
   }
 );
 
 /**
- * Modify a club
+ * Modify a discourse
  *
  * @name PUT /api/freets/:id
  *
@@ -86,19 +82,19 @@ router.delete(
  * UPDATE THOSE ^^
  */
 router.put(
-  '/:name?',
+  '/:id?',
   [
-    userValidator.isUserLoggedIn,
-    clubValidator.isValidClubName,
-    clubValidator.isExistingClubName,
-    clubValidator.hasClubProps
+    // userValidator.isUserLoggedIn,
+    // clubValidator.isValidClubName,
+    // clubValidator.isExistingClubName,
+    // clubValidator.hasClubProps
   ],
   async (req: Request, res: Response) => {
     console.log(req.body);
-    const club = await ClubCollection.updateOne(req.body.name, req.body);
+    const club = await DiscourseCollection.updateOne(req.body.discourseId, req.body.endDate, req.body.clubs);
     res.status(200).json({
-      message: 'Your club was updated successfully.',
-      club: util.constructClubResponse(club)
+      message: 'Your discourse was updated successfully.',
+      club: util.constructDiscourseResponse(club)
     });
   }
 );

@@ -31,6 +31,7 @@ function showResponse(response) {
 const formsAndHandlers = {
   'create-anon-account': createAnonAccount,
   'create-verified-account': createVerifiedAccount,
+  // 'update-account': updateAccount, intentionally commented out because all accounts cannot be updated
   'delete-user': deleteUser,
   'change-username': changeUsername,
   'change-password': changePassword,
@@ -41,6 +42,7 @@ const formsAndHandlers = {
   'delete-club': deleteClub,
   'view-all-freets': viewAllFreets,
   'view-freets-by-author': viewFreetsByAuthor,
+  'view-freets-by-club': viewFreetsByClub,
   'create-freet': createFreet,
   'edit-freet': editFreet,
   'delete-freet': deleteFreet
@@ -49,7 +51,7 @@ const formsAndHandlers = {
 // Attach handlers to forms
 function init() {
   Object.entries(formsAndHandlers).forEach(([formID, handler]) => {
-    console.log(formID)
+    // console.log(formID)
     const form = document.getElementById(formID);
     form.onsubmit = e => {
       e.preventDefault();

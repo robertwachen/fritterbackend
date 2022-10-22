@@ -312,6 +312,8 @@ This renders the `index.html` file that will be used to interact with the backen
 - `verifiedClubs` _{array}_ - The clubs that have verified the user as a member
 - `pendingClubs` _{array}_ - The clubs that have not yet verified the user as a member
 
+Note: while this API route exists, it is currently not being utilized because by design, accounts cannot be changed without approval.
+
 **Returns**
 
 - A success message
@@ -406,7 +408,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` if there are less than two clubs
 - `409` if the discourse already exists
 
-#### `PUT /api/users` - Update a club's privacy, rules, or members list
+#### `PUT /api/discourses` - Update a discourse's endDate or clubs list
 
 **Body** _(no need to add fields that are not being changed)_
 
@@ -423,7 +425,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` if there are less than two clubs
 
 
-#### `DELETE /api/clubs` - Delete club
+#### `DELETE /api/discourses` - Delete Discourse
 
 **Returns**
 
