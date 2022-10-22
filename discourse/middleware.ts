@@ -1,4 +1,4 @@
-import ClubCollection from 'club/collection';
+import ClubCollection from '../club/collection';
 import type {Request, Response, NextFunction} from 'express';
 
 

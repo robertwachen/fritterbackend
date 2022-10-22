@@ -45,7 +45,10 @@ const formsAndHandlers = {
   'view-freets-by-club': viewFreetsByClub,
   'create-freet': createFreet,
   'edit-freet': editFreet,
-  'delete-freet': deleteFreet
+  'delete-freet': deleteFreet,
+  'create-discourse': createDiscourse,
+  'modify-discourse': modifyDiscourse,
+  'delete-discourse': deleteDiscourse,
 };
 
 // Attach handlers to forms

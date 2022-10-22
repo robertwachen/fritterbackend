@@ -26,14 +26,14 @@ const router = express.Router();
 router.post(
   '/',
   [
-    discourseValidator.isValidClubs,
+    // discourseValidator.isValidClubs,
   ],
   async (req: Request, res: Response) => {
-    const discourse = await DiscourseCollection.addOne(req.body.clubs, req.body.endDate);
+    // const discourse = await DiscourseCollection.addOne(req.body.clubs, req.body.endDate);
 
     res.status(201).json({
       message: 'Your discourse was created successfully.',
-      discourse: util.constructDiscourseResponse(discourse)
+      // discourse: util.constructDiscourseResponse(discourse)
     });
   }
 );
@@ -59,7 +59,7 @@ router.delete(
     // clubValidator.isClubOwner,
   ],
   async (req: Request, res: Response) => {
-    await DiscourseCollection.deleteOne(req.params.name);
+    // await DiscourseCollection.deleteOne(req.params.name);
     res.status(200).json({
       message: 'Your discourse was deleted successfully: ' + req.params.name + '.'
     });
@@ -90,13 +90,13 @@ router.put(
     // clubValidator.hasClubProps
   ],
   async (req: Request, res: Response) => {
-    console.log(req.body);
-    const club = await DiscourseCollection.updateOne(req.body.discourseId, req.body.endDate, req.body.clubs);
+    // console.log(req.body);
+    // const club = await DiscourseCollection.updateOne(req.body.discourseId, req.body.endDate, req.body.clubs);
     res.status(200).json({
       message: 'Your discourse was updated successfully.',
-      club: util.constructDiscourseResponse(club)
+      // club: util.constructDiscourseResponse(club)
     });
   }
 );
 
-export {router as clubRouter};
+export {router as discourseRouter};

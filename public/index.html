@@ -8,6 +8,7 @@
   <script src="scripts/freet.js"></script>
   <script src="scripts/user.js"></script>
   <script src="scripts/club.js"></script>
+  <script src="scripts/discourse.js"></script>
 
   <!-- the index script should be last -->
   <script src="scripts/index.js"></script>
@@ -22,6 +23,42 @@
     <section id="operations-container">
       <h2>Operations:</h2>
       <div class="scrollbox">
+        <form id="create-discourse">
+          <h3>Create Discourse</h3>
+          <div>
+            <label for="endDate">End Date:</label>
+            <input id="endDate" name="endDate" type="date">
+          </div>
+          <div>
+            <label for="clubs">Clubs (separate with commas):</label>
+            <input id="clubs" name="clubs">
+          </div>
+          <input type="submit" value="Create Discourse">
+        </form>
+        <form id="modify-discourse">
+          <h3>Modify Discourse</h3>
+          <div>
+            <label for="discourseId">Discourse ID:</label>
+            <input id="discourseId" name="discourseId">
+          </div>
+          <div>
+            <label for="endDate">End Date:</label>
+            <input id="endDate" name="endDate" type="date">
+          </div>
+          <div>
+            <label for="clubs">Clubs (separate with commas):</label>
+            <input id="clubs" name="clubs">
+          </div>
+          <input type="submit" value="Create Discourse">
+        </form>
+        <form id="delete-discourse">
+          <h3>Delete Discourse</h3>
+          <div>
+            <label for="discourseId">Discourse ID:</label>
+            <input id="discourseId" name="discourseId">
+          </div>
+          <input type="submit" value="Delete Discourse">
+        </form>
         <form id="create-anon-account">
           <h3>Create Anon Account</h3>
           <div>
