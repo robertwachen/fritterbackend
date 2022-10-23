@@ -27,13 +27,22 @@ router.post(
   '/',
   [
     // discourseValidator.isValidClubs,
+    discourseValidator.isValidEndDate
   ],
   async (req: Request, res: Response) => {
-    // const discourse = await DiscourseCollection.addOne(req.body.clubs, req.body.endDate);
+    const clubsArray = req.body.clubs.split(',');
+
+    clubsArray.forEach((club: string, index: number) => {
+      clubsArray[index] = club.trim();
+    });
+
+    const endDate = req.body.endDate || new Date().setTime(new Date().getTime() + (7 * 24 * 60 * 60 * 1000)); // 7 days from now
+
+    const discourse = await DiscourseCollection.addOne(clubsArray, endDate);
 
     res.status(201).json({
       message: 'Your discourse was created successfully.',
-      // discourse: util.constructDiscourseResponse(discourse)
+      discourse: util.constructDiscourseResponse(discourse)
     });
   }
 );

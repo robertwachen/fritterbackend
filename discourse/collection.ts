@@ -19,13 +19,11 @@ class DiscourseCollection {
    * @return {Promise<HydratedDocument<Discourse>>} - The newly created discourse
    */
   static async addOne(clubs: String[], endDate: Date): Promise<HydratedDocument<Discourse>> {
+
     const startDate = new Date();
-
-    const defaultEndDate = new Date().setTime(startDate.getTime() + (7 * 24 * 60 * 60 * 1000)); // 7 days from now
-
-    const finalEndDate = endDate || defaultEndDate
     
-    const discourse = new DiscourseModel({startDate, finalEndDate, clubs});
+    const discourse = new DiscourseModel({startDate, endDate, clubs});
+    console.log(discourse)
     await discourse.save(); // Saves discourse to MongoDB
     return discourse;
   }

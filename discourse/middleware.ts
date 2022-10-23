@@ -22,7 +22,21 @@ import type {Request, Response, NextFunction} from 'express';
   return;
 }
 
+const isValidEndDate = (req: Request, res: Response, next: NextFunction) => {
+  const endDate = new Date(req.body.endDate);
+  const today = new Date();
+  
+  if (endDate.getTime() < today.getTime()) {
+    return res.status(400).json({
+      message: 'The end date you entered is in the past.'
+    });
+  }
+
+  next();
+  return;
+}
 
 export {
-  isValidClubs
+  isValidClubs,
+  isValidEndDate
 }
