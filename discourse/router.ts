@@ -60,17 +60,16 @@ router.post(
  * ^^ UPDATE
  */
 router.delete(
-  '/:id?',
+  '/:discourseId?',
   [
     // userValidator.isUserLoggedIn,
-    // clubValidator.isValidClubName,
-    // clubValidator.isExistingClubName,
     // clubValidator.isClubOwner,
   ],
   async (req: Request, res: Response) => {
-    // await DiscourseCollection.deleteOne(req.params.name);
+    console.log(req.params);
+    await DiscourseCollection.deleteOne(req.params.discourseId);
     res.status(200).json({
-      message: 'Your discourse was deleted successfully: ' + req.params.name + '.'
+      message: 'Your discourse was deleted successfully: ' + req.params.discourseId + '.'
     });
   }
 );

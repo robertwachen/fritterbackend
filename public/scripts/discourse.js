@@ -15,7 +15,7 @@
   }
   
   function deleteDiscourse(fields) {
-    fetch(`/api/discourses/${fields.id}`, {method: 'DELETE'})
+    fetch(`/api/discourses/${fields.discourseId}`, {method: 'DELETE'})
       .then(showResponse)
       .catch(showResponse);
   }
