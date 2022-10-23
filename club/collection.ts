@@ -88,6 +88,16 @@ class ClubCollection {
     const club = await ClubModel.deleteOne({_id: clubId});
     return club !== null;
   }
+
+  static async getAllClubNames(): Promise<Array<string>> {
+    const clubs = await ClubModel.find();
+    const clubNames: Array<string> = [];
+    clubs.forEach((club) => {
+      clubNames.push(club.name);
+    });
+    return clubNames;
+  }
+
 }
 
 export default ClubCollection;

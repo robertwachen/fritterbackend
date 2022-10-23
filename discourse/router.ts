@@ -26,10 +26,10 @@ const router = express.Router();
 router.post(
   '/',
   [
-    // discourseValidator.isValidClubs,
-    discourseValidator.isValidEndDate
+    discourseValidator.isValidClubs,
+    discourseValidator.isValidEndDate,
   ],
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response) => {    
     const clubsArray = req.body.clubs.split(',');
 
     clubsArray.forEach((club: string, index: number) => {
@@ -62,8 +62,8 @@ router.post(
 router.delete(
   '/:discourseId?',
   [
-    // userValidator.isUserLoggedIn,
-    // clubValidator.isClubOwner,
+    discourseValidator.discourseExists,
+    discourseValidator.hasEditingPermissions
   ],
   async (req: Request, res: Response) => {
     console.log(req.params);
