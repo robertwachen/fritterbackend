@@ -69,7 +69,7 @@ router.delete(
     console.log(req.params);
     await DiscourseCollection.deleteOne(req.params.discourseId);
     res.status(200).json({
-      message: 'Your discourse was deleted successfully: ' + req.params.discourseId + '.'
+      message: 'Your discourse with the following ID was deleted successfully: ' + req.params.discourseId + '.'
     });
   }
 );
@@ -90,7 +90,7 @@ router.delete(
  * UPDATE THOSE ^^
  */
 router.put(
-  '/:id?',
+  '/:discourseId?',
   [
     // userValidator.isUserLoggedIn,
     // clubValidator.isValidClubName,
@@ -98,11 +98,16 @@ router.put(
     // clubValidator.hasClubProps
   ],
   async (req: Request, res: Response) => {
-    // console.log(req.body);
-    // const club = await DiscourseCollection.updateOne(req.body.discourseId, req.body.endDate, req.body.clubs);
+    const clubsArray = req.body.clubs.split(',');
+
+    clubsArray.forEach((club: string, index: number) => {
+      clubsArray[index] = club.trim();
+    });
+    
+    const discourse = await DiscourseCollection.updateOne(req.body.discourseId, req.body.endDate, clubsArray);
     res.status(200).json({
       message: 'Your discourse was updated successfully.',
-      // club: util.constructDiscourseResponse(club)
+      discourse: util.constructDiscourseResponse(discourse)
     });
   }
 );
